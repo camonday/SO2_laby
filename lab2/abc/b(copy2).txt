@@ -1,0 +1,1 @@
+/home/arcia/SO/lab2/abc/b.txt
