@@ -1,0 +1,45 @@
+
+In movies.sh line 14:
+    echo -e "\e[31m\033[1m${@}\033[0m" >&2
+                          ^--^ SC2145: Argument mixes string and array. Use * or separate argument.
+
+
+In movies.sh line 30:
+        if grep "| Title" ${MOVIE_FILE} | grep -q "${QUERY}"; then
+                          ^-----------^ SC2086: Double quote to prevent globbing and word splitting.
+
+Did you mean: 
+        if grep "| Title" "${MOVIE_FILE}" | grep -q "${QUERY}"; then
+
+
+In movies.sh line 31:
+            RESULTS_LIST+=( ${MOVIE_FILE} )
+                            ^-----------^ SC2206: Quote to prevent word splitting/globbing, or split robustly with mapfile or read -a.
+
+
+In movies.sh line 45:
+            RESULTS_LIST+=( ${MOVIE_FILE} )
+                            ^-----------^ SC2206: Quote to prevent word splitting/globbing, or split robustly with mapfile or read -a.
+
+
+In movies.sh line 67:
+    local TEMP=$(cat "${FILENAME}")
+          ^--^ SC2155: Declare and assign separately to avoid masking return values.
+
+
+In movies.sh line 116:
+    MOVIES_LIST=`query_title "${MOVIES_LIST}" "${QUERY_TITLE}"`
+                ^-- SC2006: Use $(...) notation instead of legacy backticked `...`.
+
+Did you mean: 
+    MOVIES_LIST=$(query_title "${MOVIES_LIST}" "${QUERY_TITLE}")
+
+
+In movies.sh line 123:
+if [[ "${#MOVIES_LIST}" < 1 ]]; then
+                        ^-- SC2071: < is for string comparisons. Use -lt instead.
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2071 -- < is for string comparisons. Use ...
+  https://www.shellcheck.net/wiki/SC2145 -- Argument mixes string and array. ...
+  https://www.shellcheck.net/wiki/SC2155 -- Declare and assign separately to ...
